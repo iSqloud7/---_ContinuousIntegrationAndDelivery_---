@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: student-info-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - path: /ver1
+            pathType: Prefix
+            backend:
+              service:
+                name: student-info-nginx-v1-service
+                port:
+                  number: 80
+          - path: /ver2
+            pathType: Prefix
+            backend:
+              service:
+                name: student-info-nginx-v2-service
+                port:
+                  number: 80
+    - host: ver1.223260.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: student-info-nginx-v1-service
+                port:
+                  number: 80
+    - host: ver2.223260.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: student-info-nginx-v2-service
+                port:
+                  number: 80
