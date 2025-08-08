@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: student-info-nginx-deployment
+spec:
+  replicas: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  selector:
+    matchLabels:
+      app: student-info-nginx
+  template:
+    metadata:
+      labels:
+        app: student-info-nginx
+    spec:
+      containers:
+      - name: student-info-nginx-container
+        image: ivkeex/student-info-nginx:1.0
+        ports:
+        - containerPort: 80
